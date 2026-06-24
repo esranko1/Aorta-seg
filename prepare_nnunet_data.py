@@ -35,11 +35,24 @@ def find_label(case_dir: Path) -> Path | None:
     return next(case_dir.rglob("Segmentation.seg.nrrd"), None)
 
 
-def find_mri(case_dir: Path) -> Path | None:
-    return next(
-        (p for p in case_dir.rglob("*.nii.gz") if "segmentation" not in p.name.lower()),
-        None
-    )
+def find_mri(case_dir: Path, label: Path | None) -> Path | None:
+    # Prefer .nii.gz in the same folder as the segmentation (most likely the scanned image)
+    search_dirs = []
+    if label is not None:
+        search_dirs.append(label.parent)
+    search_dirs.append(case_dir)
+
+    for d in search_dirs:
+        candidates = [
+            p for p in d.glob("*.nii.gz")
+            if "segmentation" not in p.name.lower()
+        ]
+        if len(candidates) == 1:
+            return candidates[0]
+        if len(candidates) > 1:
+            return candidates[0]
+
+    return None
 
 
 def copy_cases(src: Path, out: Path, dry_run: bool = False) -> None:
@@ -60,7 +73,7 @@ def copy_cases(src: Path, out: Path, dry_run: bool = False) -> None:
     for case_dir in cases:
         case_id = case_dir.name
         label_src = find_label(case_dir)
-        mri_src = find_mri(case_dir)
+        mri_src = find_mri(case_dir, label_src)
 
         missing = []
         if label_src is None:
