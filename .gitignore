@@ -1,0 +1,79 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# MRI data — NIfTI, NRRD, DICOM, MINC
+*.nii
+*.nii.gz
+*.nrrd
+*.nhdr
+*.mha
+*.mhd
+*.dcm
+*.mnc
+*.mgz
+
+# OASIS-specific folder structure
+OAS*/
+disc*/
+RAW/
+PROCESSED/
+
+# nnUNet environment vars / outputs
+nnUNet_raw/
+nnUNet_preprocessed/
+nnUNet_results/
+nnUNet_raw_data_base/
+
+# Model weights and checkpoints
+*.pth
+*.pt
+*.ckpt
+*.h5
+checkpoint_final.pth
+checkpoint_latest.pth
+checkpoint_best.pth
+model_best.model
+model_final_checkpoint.model
+
+# Logs and run artifacts
+*.log
+runs/
+logs/
+wandb/
+tensorboard/
+lightning_logs/
+
+# Plots and figures
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.svg
+figures/
+plots/
+
+# Misc large outputs
+data/
+results/
+predictions/
+segmentations/
+*.vtk
+*.stl
+*.obj
